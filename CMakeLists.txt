@@ -45,13 +45,14 @@ project(${PROJECT_NAME} VERSION ${CURRENT_VERSION})
 # and later `git submodule update --remote --merge` to keep it up to date
 # On Github Actions, this is done as a part of actions/checkout
 add_subdirectory(JUCE)
+add_subdirectory((JUCE/juce_audio_basics))
 
 # Add CLAP format
 add_subdirectory(modules/clap-juce-extensions EXCLUDE_FROM_ALL)
 
 # Add any other modules you want modules here, before the juce_add_plugin call
 # juce_add_module(modules/my_module)
-
+juce_add_module("modules/melatonin_audio_sparklines")
 # This adds the melatonin inspector module
 add_subdirectory (modules/melatonin_inspector)
 
@@ -94,6 +95,7 @@ clap_juce_extensions_plugin(TARGET "${PROJECT_NAME}"
 
 # Enable fast math, C++20 and a few other target defaults
 include(SharedCodeDefaults)
+
 
 
 # Manually list all .h and .cpp files for the plugin
@@ -139,6 +141,7 @@ target_link_libraries(SharedCode
     INTERFACE
     Assets
     melatonin_inspector
+    melatonin_audio_sparklines
     juce_audio_utils
     juce_audio_basics
     juce_audio_processors
